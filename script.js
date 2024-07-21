@@ -15,8 +15,13 @@ const currentP1 = document.getElementById("current--1");
 const btnNew = document.querySelector(".btn--new");
 const btnRoll = document.querySelector(".btn--roll");
 const btnHold = document.querySelector(".btn--hold");
+// Sound
+const startAudio = document.getElementById('startSound');
+const endAudio = document.getElementById('endSound');
+
 
 let scores, currentScore, activePlayer, playGame;
+// let soundPlayed = false;
 
 // Fun Initialization
 const inti = function () {
@@ -30,6 +35,7 @@ const inti = function () {
   currentScore = 0;
   playGame = true;
 
+
   currentP0.textContent = 0;
   currentP1.textContent = 0;
 
@@ -39,6 +45,15 @@ const inti = function () {
   player0.classList.add("player--active");
   player1.classList.remove("player--active");
 };
+
+// Sound Fuction
+// function playSound1() {
+//     startAudio.play();
+// }
+
+function playSound2() {
+  endAudio.play();
+}
 
 inti();
 
@@ -55,7 +70,6 @@ btnRoll.addEventListener("click", function () {
   // roll dice is set to display image on click of btn--roll button
   if (playGame) {
     diceP1.classList.remove("hidden");
-
     // generate random number
     const dice = Math.floor(Math.random() * 6) + 1;
 
@@ -82,6 +96,7 @@ btnHold.addEventListener("click", function () {
     document.getElementById(`score--${activePlayer}`).textContent =
       scores[activePlayer];
 
+
     if (scores[activePlayer] >= 100) {
       playGame = false;
       document
@@ -92,6 +107,10 @@ btnHold.addEventListener("click", function () {
         .querySelector(`.player--${activePlayer}`)
         .classList.add("player--active");
       diceP1.classList.add("hidden");
+
+      // Play sound if active user win
+      playSound2();
+
     } else {
       switchPlayer();
     }
